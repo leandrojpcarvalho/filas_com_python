@@ -11,9 +11,13 @@ class Queue(AbstractQueue):
 
     def enqueue(self, value):
         self.queue.insert_last(value)
+        return value
 
     def dequeue(self):
         return self.queue.delete_header()
 
     def search(self, index):
         return self.queue[index].value
+
+    def search_by_value(self, value: str):
+        return self.queue.exist_in_list(value)

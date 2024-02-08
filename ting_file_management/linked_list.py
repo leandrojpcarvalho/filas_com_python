@@ -69,13 +69,13 @@ class Linked_List:
         self.__is_empty(new_node)
         self.__length += 1
 
-    def insert_last(self, value):
+    def insert_last(self, value) -> Node:
         new_node = Node(value)
-        self.__is_empty(new_node)
         if self.tail_node:
             new_node.preview = self.tail_node
             self.tail_node.next = new_node
             self.tail_node = new_node
+        self.__is_empty(new_node)
         self.__length += 1
 
     def __is_empty(self, new_node: Node):
@@ -109,6 +109,15 @@ class Linked_List:
         self.tail_node.delete()
         self.__length -= 1
         return value
+
+    def exist_in_list(self, value) -> bool:
+        hashed = self.__to_hash_map()
+        return any(
+            [
+                value == item.value["nome_do_arquivo"]
+                for key, item in hashed.items()
+            ]
+        )
 
     def __getitem__(self, index):
         if not isinstance(index, int) or index >= self.__length or index < 0:
