@@ -27,6 +27,8 @@ class PriorityQueue(AbstractQueue):
         return self.regular_priority.dequeue()
 
     def search(self, index):
+        if not isinstance(index, int):
+            raise IndexError
         if index < len(self.high_priority):
             return self.high_priority.search(index)
         return self.regular_priority.search(index - len(self.high_priority))

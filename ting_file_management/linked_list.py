@@ -99,10 +99,15 @@ class Linked_List:
         new_node.preview.next = new_node
 
     def delete_header(self):
-        value = self.header_node.value
-        self.header_node.delete()
-        self.__length -= 1
-        return value
+        if len(self):
+            value = self.header_node.value
+            self.header_node = self.header_node.next
+            if self.header_node.preview:
+                self.header_node.preview.delete()
+                self.header_node.preview = None
+            self.__length -= 1
+            return value
+        return "Não há mais elementos"
 
     def delete_tail(self):
         value = self.tail_node.value
