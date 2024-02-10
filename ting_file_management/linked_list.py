@@ -1,8 +1,11 @@
+from ting_file_management.indigent import Indigent
+
+
 class Node:
     def __init__(self, value) -> None:
         self.__preview: Node = None
         self.__next: Node = None
-        self.__value = value
+        self.__value: Indigent = value
 
     def __repr__(self) -> str:
         return str(
@@ -50,10 +53,14 @@ class Linked_List:
         self.__length = 0
 
     def __str__(self) -> str:
-        return str(self.__to_hash_map())
+        return str(self.hash_map)
 
     def __len__(self):
         return self.__length
+
+    @property
+    def hash_map(self):
+        return self.__to_hash_map()
 
     @property
     def len(self):
@@ -61,7 +68,6 @@ class Linked_List:
 
     def insert_first(self, value):
         new_node = Node(value)
-        print(new_node)
         if self.header_node:
             new_node.next = self.header_node
             self.header_node.preview = new_node
@@ -91,7 +97,7 @@ class Linked_List:
         ):
             raise IndexError("Índice Inválido ou Inexistente")
         new_node = Node(value)
-        hashed = self.__to_hash_map()
+        hashed = self.hash_map
         node_pushed = hashed[position]
         new_node.next = node_pushed
         new_node.preview = node_pushed.preview
@@ -102,7 +108,7 @@ class Linked_List:
         if len(self):
             value = self.header_node.value
             self.header_node = self.header_node.next
-            if self.header_node.preview:
+            if self.header_node and self.header_node.preview:
                 self.header_node.preview.delete()
                 self.header_node.preview = None
             self.__length -= 1
@@ -113,21 +119,16 @@ class Linked_List:
         value = self.tail_node.value
         self.tail_node.delete()
         self.__length -= 1
-        return value
+        return str(value)
 
     def exist_in_list(self, value) -> bool:
-        hashed = self.__to_hash_map()
-        return any(
-            [
-                value == item.value["nome_do_arquivo"]
-                for key, item in hashed.items()
-            ]
-        )
+        hashed = self.hash_map
+        return any([value == item.value.path for key, item in hashed.items()])
 
     def __getitem__(self, index):
         if not isinstance(index, int) or index >= self.__length or index < 0:
             raise IndexError("Índice Inválido ou Inexistente")
-        return self.__to_hash_map()[index]
+        return self.hash_map[index]
 
     def __to_hash_map(self) -> dict[int, Node]:
         node = self.header_node

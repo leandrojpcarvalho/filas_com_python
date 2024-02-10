@@ -35,6 +35,5 @@ def test_basic_priority_queueing():
     assert instance.search(0) == {"qtd_linhas": 1}
     assert instance.search(1) == {"qtd_linhas": 5}
 
-    with pytest.raises(IndexError) as err:
+    with pytest.raises(IndexError):
         instance.search("a")
-    # assert str(err) == "Índice Inválido ou Ineistente"
